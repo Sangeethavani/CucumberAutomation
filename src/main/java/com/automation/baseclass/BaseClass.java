@@ -1,10 +1,22 @@
 package com.automation.baseclass;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+
+import com.aventstack.extentreports.utils.FileUtil;
+
+import cucumber.api.Scenario;
+import sun.net.ftp.FtpDirEntry.Type;
 
 public class BaseClass {
 
@@ -78,6 +90,21 @@ public class BaseClass {
 		driver.switchTo().frame(0);
 		
 	}
+	
+	
+	  public static void screenshot(Scenario scenario,String fileWithPath) throws IOException { 
+		    TakesScreenshot ts = (TakesScreenshot) driver;
+		    File srcFile = ts.getScreenshotAs(OutputType.FILE);
+		    File destFile = new File(fileWithPath);
+		    FileUtils .copyFile(srcFile, destFile);
+
+
+	  
+	  
+	 }
+	 
+	
+	
 	
 	}
 	

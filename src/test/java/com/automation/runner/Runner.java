@@ -16,10 +16,10 @@ import cucumber.api.junit.Cucumber;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features="src\\test\\java\\com\\adactin\\feature", 
-						glue="com\\adactin\\stepdefinition",
-					plugin= {"pretty","html:Report",
-								"com.cucumber.listener.ExtentCucumberFormatter:Report\\extentReport.html"},
+@CucumberOptions(features="src\\test\\java\\com\\automation\\feature", 
+						glue="com\\automation\\stepdefinition",
+					//plugin= {"pretty","html:Report",
+							//	"com.cucumber.listener.ExtentCucumberFormatter:Report\\extentReport.html"},
 						monochrome=true,
 						dryRun=false,
 						strict=false)
@@ -38,7 +38,7 @@ public class Runner {
 	
 	@AfterClass
 	public static void tearDown() {
-	//	driver.close();
+		driver.close();
 
 	}
 	

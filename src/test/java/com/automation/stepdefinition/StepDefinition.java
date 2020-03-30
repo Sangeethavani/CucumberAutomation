@@ -2,6 +2,7 @@ package com.automation.stepdefinition;
 
 import java.io.IOException;
 
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import com.automation.baseclass.BaseClass;
@@ -11,35 +12,83 @@ import com.automation.runner.Runner;
 import com.pom.org.Login;
 
 import cucumber.api.PendingException;
+import cucumber.api.Scenario;
 import cucumber.api.java.en.*;
 
 public class StepDefinition extends BaseClass {
 
 	public static WebDriver driver = Runner.driver;
 	public static PageObjectManager pom = new PageObjectManager(driver);
+	
+	
+	public void beforeHooks(Scenario scenario) {
+		String name=scenario.getName();
+		System.out.println("Scenario name: "+name);
+	}
+	
+	
+	
+	public void afterHooks(Scenario scenario) throws IOException {
+		String status = scenario.getStatus();
+		System.out.println("Status: "+status);
+		
+		if(scenario.isFailed()) {
+		screenshot(scenario, "C:\\Users\\kokil\\eclipse-workspace\\CucumberAutomation\\screenshot");	
+			
+		}
+	}
 
+	@Given("^the user to launch the browser$")
+	public void the_user_to_launch_the_browser() throws Throwable {
+	System.out.println("Launched browser");    
+	}
+
+	@Then("^user to launch application$")
+	public void user_to_launch_application() throws Throwable {
+	  System.out.println("Launched application");
+	}
+
+		
 	// SCENARIO1
 	@Given("user launch the application")
 	public void user_launch_the_application() throws IOException, InterruptedException {
 		String url = FileReaderManager.getInstance().getcrInstance().geturl();
 		driver.get(url);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 
 		click(pom.getHp().getLogin());
 
 	}
-
-	@When("user enter valid username in the username field")
-	public void user_enter_valid_username_in_the_username_field() throws IOException {
-		input(pom.getLp().getMail(), "rajraj1234@gmail.com");
-
+	
+	@When("^user enter valid username \"([^\"]*)\" in the username field$")
+	public void user_enter_valid_username_in_the_username_field(String arg1) throws Throwable {
+		input(pom.getLp().getMail(), arg1);
+		Thread.sleep(3000);
 	}
 
-	@When("user enter valid password in password field")
-	public void user_enter_valid_password_in_password_field() {
-		input(pom.getLp().getPass(), "Sangeetha22");
-	}
+	@When("^user enter valid password \"([^\"]*)\" in password field$")
+	public void user_enter_valid_password_in_password_field(String arg1) throws Throwable {
+		input(pom.getLp().getPass(), arg1);
+		Thread.sleep(3000);
+	    }
 
+
+	
+	
+
+	/*
+	 * @When("user enter valid username in the username field") public void
+	 * user_enter_valid_username_in_the_username_field(String arg1) throws
+	 * IOException, InterruptedException { input(pom.getLp().getMail(),arg1);
+	 * Thread.sleep(3000);
+	 * 
+	 * }
+	 * 
+	 * @When("user enter valid password in password field") public void
+	 * user_enter_valid_password_in_password_field(String arg1) throws
+	 * InterruptedException { input(pom.getLp().getPass(), arg1);
+	 * Thread.sleep(3000); }
+	 */
 	@When("user click on login button")
 	public void user_click_on_login_button() {
 		click(pom.getLp().getLog());
